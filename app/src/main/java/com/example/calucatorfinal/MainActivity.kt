@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -15,32 +16,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.calucatorfinal.ui.theme.CalucatorfinalTheme
+import com.example.calucatorfinal.ui.theme.LoginScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CalucatorfinalTheme(){
-                  Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                      Greeting(
-                          name = "tejas",
-                          modifier = Modifier.padding(padding)
-                      )
-                  }
-              }
+            CalucatorfinalTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+                    Box(modifier = Modifier.padding(padding)) {
+                        LoginScreen()
+                    }
+                }
+            }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier.padding(20.dp),
-        textAlign = TextAlign.Center
-    )
-}
+//@Composable
+//fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Hello $name!",
+//        modifier = modifier.padding(20.dp),
+//        textAlign = TextAlign.Center
+//    )
+//}
 
 //@Preview(showBackground = true)
 //@Composable
