@@ -11,6 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+//import com.example.calucatorfinal.ui.theme.CalucatorfinalTheme
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.example.calucatorfinal.ui.theme.CalucatorfinalTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,14 +21,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CalucatorfinalTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            CalucatorfinalTheme(){
+                  Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+                      Greeting(
+                          name = "tejas",
+                          modifier = Modifier.padding(padding)
+                      )
+                  }
+              }
         }
     }
 }
@@ -34,14 +37,15 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
-        modifier = modifier
+        modifier = modifier.padding(20.dp),
+        textAlign = TextAlign.Center
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CalucatorfinalTheme {
-        Greeting("Android")
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    CalucatorfinalTheme {
+//        Greeting("Android")
+//    }
+//}
