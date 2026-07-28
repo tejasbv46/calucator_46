@@ -1,6 +1,5 @@
 package com.example.calucatorfinal.ui.theme
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +31,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -39,6 +42,9 @@ fun LoginScreen() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var usernameError by remember { mutableStateOf("") }
+    var passwordError by remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -48,18 +54,27 @@ fun LoginScreen() {
         verticalArrangement = Arrangement.Center
 
     ) {
+        Text(
+            text = "Login",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(bottom = 20.dp)
+            ,color = Color.Black
+
+        )
+
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
             textStyle = LocalTextStyle.current.copy(color = Color.Black) ,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedTextColor = Color.Black,
-                unfocusedTextColor = Color.Red, cursorColor = Color.Black
-                , focusedBorderColor = Color.Magenta, unfocusedBorderColor = Color.Red,
-                unfocusedLeadingIconColor = Color.Red, focusedLeadingIconColor = Color.Magenta
-
+              //  focusedTextColor = Color.Black,
+                //unfocusedTextColor = Color.Red,
+                cursorColor = Color.Black
+                ,focusedBorderColor = Color.Magenta, unfocusedBorderColor = Color.Red,
+           unfocusedLeadingIconColor = Color.Red, focusedLeadingIconColor = Color.Magenta
 
             ),
+
             leadingIcon = {
                 Icon(
                     Icons.Default.AccountCircle,
@@ -69,8 +84,15 @@ fun LoginScreen() {
             },
             label = { Text("username") },
             modifier = Modifier.fillMaxWidth(0.9f),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(60.dp)
         )
+        Text(
+        text = usernameError,
+        color = Color.Black,
+        fontSize = 12.sp,
+
+        )
+       // व्यक्ति
 
         OutlinedTextField(
             value = password,
@@ -95,18 +117,40 @@ fun LoginScreen() {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
                         imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                        contentDescription = "Toggle Password",
+                        contentDescription =null ,
                         tint=if (passwordVisible) Color.DarkGray else Color.Black
                     )
+
                 }
             },
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(mask ='*' ),
+
             modifier = Modifier.fillMaxWidth(0.9f),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(60.dp)
+        )
+        Text (
+                text =passwordError,
+        color = Color.Black,
+        fontSize = 12.sp
         )
 
-        Button(
-            onClick = { /* Handle Login */ },
+        Button (
+            onClick = {
+                scope.launch {  /* Handle Login */
+                    if (username.isEmpty()) {
+                        usernameError = "username cannot be empty"
+                    }
+
+                    if (password.isEmpty()) {
+                        passwordError = "password cannot be empty"
+                    }
+
+                    delay(5000)
+
+                    usernameError = ""
+                    passwordError = ""
+                }
+            },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             modifier = Modifier.fillMaxWidth(0.6f),
             shape = RoundedCornerShape(20.dp)
